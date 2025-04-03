@@ -18,6 +18,9 @@ export default async function Page(props: {
   if (!page) notFound();
 
   const MDXContent = page.data.body;
+  const lastModified = page.data.lastModified
+    ? new Date(page.data.lastModified)
+    : undefined;
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
@@ -39,6 +42,13 @@ export default async function Page(props: {
           }}
         />
       </DocsBody>
+      {lastModified && (
+        <footer>
+          <span className="rounded-full border border-fd-muted p-1 text-xs text-fd-muted-foreground">
+            Last modified: {lastModified?.toLocaleDateString()}
+          </span>
+        </footer>
+      )}
     </DocsPage>
   );
 }
